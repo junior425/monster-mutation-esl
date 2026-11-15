@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* The whole UI is sized in rem on a 120rem x 67.5rem (16:9) stage.
+   Scaling the root font keeps the stage fitted to any screen/TV. */
+html {
+  font-size: min(0.8333vw, 1.4815vh);
+}
+
+body {
+  @apply bg-black font-sans text-white antialiased;
+  overflow: hidden;
+}
+
+#root {
+  @apply flex h-screen w-screen items-center justify-center;
+}
+
+.text-glow-cyan { text-shadow: 0 0 0.6rem rgba(34, 211, 238, 0.9), 0 0 1.6rem rgba(34, 211, 238, 0.5); }
+.text-glow-pink { text-shadow: 0 0 0.6rem rgba(244, 114, 182, 0.9), 0 0 1.6rem rgba(244, 114, 182, 0.5); }
+.text-glow-amber { text-shadow: 0 0 0.6rem rgba(251, 191, 36, 0.9), 0 0 1.6rem rgba(251, 191, 36, 0.5); }
+
+.arena-bg {
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 100%, rgba(99, 102, 241, 0.35), transparent 70%),
+    radial-gradient(ellipse 40% 50% at 8% 40%, rgba(34, 211, 238, 0.18), transparent 70%),
+    radial-gradient(ellipse 40% 50% at 92% 40%, rgba(249, 115, 22, 0.18), transparent 70%),
+    linear-gradient(180deg, #0b0a24 0%, #1e1b4b 55%, #0f172a 100%);
+}
+
+.arena-floor {
+  background-image:
+    linear-gradient(rgba(129, 140, 248, 0.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(129, 140, 248, 0.35) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  transform: perspective(30rem) rotateX(60deg);
+  transform-origin: top center;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent);
+}
+
+.monster-eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blink 4.5s infinite;
+}
+
+@keyframes blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+
+.hp-stripes {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.18) 0 0.6rem,
+    transparent 0.6rem 1.2rem
+  );
+}
+
+select option { color: #0f172a; }
