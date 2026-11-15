@@ -286,6 +286,15 @@ export default function App() {
           >
             + Custom Chunks
           </button>
+          <a
+            href="/manual-monster-mutation.pdf"
+            target="_blank"
+            rel="noreferrer"
+            title="Manual de juego (PDF)"
+            className="whitespace-nowrap rounded-xl border-2 border-amber-300/70 px-3 py-2 font-arcade text-[1.2rem] text-amber-200 hover:bg-amber-400/10"
+          >
+            MANUAL
+          </a>
           <button
             type="button"
             onClick={toggleFullscreen}

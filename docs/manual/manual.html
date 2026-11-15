@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Manual de Juego: Monster Mutation – Chunk Battle</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "DejaVu Sans", "Helvetica Neue", Arial, sans-serif; color: #141332; font-size: 10.5pt; line-height: 1.42; margin: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  h1 { font-size: 30pt; margin: 0 0 6pt; line-height: 1.1; }
+  h2 { font-size: 17pt; color: #4c1d95; border-bottom: 3px solid #22d3ee; padding-bottom: 4pt; margin: 0 0 10pt; page-break-after: avoid; }
+  h3 { font-size: 12.5pt; color: #4c1d95; margin: 14pt 0 5pt; page-break-after: avoid; }
+  p { margin: 0 0 7pt; }
+  ul, ol { margin: 0 0 8pt; padding-left: 18pt; }
+  li { margin-bottom: 2.5pt; }
+  .page { margin-top: 14pt; }
+  .cover { page-break-after: always; }
+  .grid2, .steps li, tr { break-inside: avoid; }
+  .cover { height: 258mm; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(160deg, #0b0a24 0%, #1e1b4b 55%, #4c1d95 100%); color: #fff; border-radius: 12pt; padding: 22mm 16mm; }
+  .cover .sub { font-size: 13pt; color: #22d3ee; letter-spacing: 3pt; text-transform: uppercase; margin-bottom: 10pt; }
+  .cover h1 { color: #f0abfc; font-size: 34pt; }
+  .cover h1 span { color: #67e8f9; display: block; font-size: 26pt; }
+  .cover img { width: 100%; border-radius: 8pt; border: 3px solid #818cf8; margin: 18pt 0; }
+  .cover .badge { display: inline-block; background: #fbbf24; color: #0b0a24; font-weight: bold; padding: 5pt 13pt; border-radius: 20pt; margin: 3pt; font-size: 10pt; }
+  .cover .url { margin-top: 18pt; font-size: 11.5pt; color: #ddd; }
+  .cover .url b { color: #fff; }
+  img.shot { width: 74%; border-radius: 6pt; border: 2px solid #4c1d95; margin: 4pt auto 2pt; display: block; }
+  .grid2 img.shot { width: 100%; }
+  .cap { font-size: 9pt; color: #555; text-align: center; margin-bottom: 10pt; }
+  table { width: 100%; border-collapse: collapse; margin: 5pt 0 10pt; font-size: 9.8pt; }
+  th, td { border: 1px solid #c7c3e6; padding: 4.5pt 7pt; text-align: left; vertical-align: top; }
+  th { background: #ede9fe; color: #2e1065; }
+  td.k { font-family: "DejaVu Sans Mono", monospace; font-weight: bold; white-space: nowrap; text-align: center; }
+  .box { border-left: 5px solid #fbbf24; background: #fffbeb; padding: 7pt 11pt; margin: 8pt 0; border-radius: 4pt; page-break-inside: avoid; }
+  .box.tip { border-color: #22d3ee; background: #ecfeff; }
+  .box.warn { border-color: #dc2626; background: #fef2f2; }
+  .box b:first-child { display: block; margin-bottom: 2pt; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10pt; }
+  .card { border: 1px solid #c7c3e6; border-radius: 6pt; padding: 7pt 10pt; page-break-inside: avoid; }
+  .card h3 { margin-top: 0; }
+  .steps { counter-reset: s; list-style: none; padding: 0; }
+  .steps li { counter-increment: s; position: relative; padding: 5pt 8pt 5pt 32pt; background: #f5f3ff; border-radius: 6pt; margin-bottom: 4pt; }
+  .steps li::before { content: counter(s); position: absolute; left: 8pt; top: 4pt; width: 17pt; height: 17pt; border-radius: 50%; background: #4c1d95; color: #fff; font-weight: bold; text-align: center; font-size: 9.5pt; line-height: 17pt; }
+  code, pre { font-family: "DejaVu Sans Mono", Consolas, monospace; font-size: 9pt; background: #f1f1f6; border-radius: 3pt; }
+  code { padding: 1pt 4pt; }
+  pre { padding: 7pt 9pt; white-space: pre-wrap; margin: 4pt 0 8pt; }
+  .tag { display: inline-block; padding: 1pt 7pt; border-radius: 10pt; color: #fff; font-weight: bold; font-size: 9pt; }
+  .t-next { background: #6d28d9; } .t-hit { background: #059669; } .t-crit { background: #ea580c; } .t-shield { background: #0284c7; }
+  .hl { color: #b45309; font-weight: bold; }
+  .foot { font-size: 9pt; color: #777; text-align: center; margin-top: 16pt; }
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<div class="cover">
+  <div class="sub">Manual de juego · Guía del profesor</div>
+  <h1>Monster Mutation<span>Chunk Battle</span></h1>
+  <p style="font-size:12.5pt;color:#e0e7ff;max-width:150mm">Juego arcade de speaking y gramática para clases de inglés (ESL). Dos equipos, dos monstruos y una sola regla: <b>¡habla con fluidez para atacar!</b></p>
+  <img src="img/pantalla.jpg" alt="Pantalla principal">
+  <div>
+    <span class="badge">2 equipos</span>
+    <span class="badge">4 mazos de gramática</span>
+    <span class="badge">Chunks personalizados</span>
+    <span class="badge">Pantalla 16:9 para TV</span>
+  </div>
+  <div class="url">Juego: <b>https://monster-mutation-esl.vercel.app</b><br>Código: <b>github.com/junior425/monster-mutation-esl</b></div>
+  <p style="margin-top:20pt;font-size:9.5pt;color:#bbb">Versión 1.0 · Noviembre 2026</p>
+</div>
+
+<!-- 1 -->
+<div class="page">
+  <h2>1. ¿Qué es y para qué sirve?</h2>
+  <p><b>Monster Mutation: Chunk Battle</b> es un juego de combate por equipos que se proyecta en la TV o el video beam del salón mientras el profesor lo controla desde el portátil. Cada turno, el equipo activo recibe un <b>chunk</b> (bloque de lenguaje) para completar <b>en voz alta</b>. Según la calidad y la fluidez de la respuesta, el profesor decide si su monstruo ataca, hace un combo crítico o si el rival bloquea el ataque.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>La Locomotora (Locomotive)</h3>
+      <p>Es la tarjeta grande del centro: el <b>inicio fijo</b> de la estructura, por ejemplo <code>She WASN'T a...</code>, <code>They DIDN'T...</code>, <code>The report WAS...</code>. La palabra gramatical clave aparece en MAYÚSCULAS y brilla en amarillo.</p>
+    </div>
+    <div class="card">
+      <h3>Los Vagones (Slot Bubbles)</h3>
+      <p>Son las 4 burbujas de colores (A, B, C, D) con terminaciones posibles. El estudiante elige una, la "engancha" a la locomotora y dice la oración <b>completa</b>, sin leer palabra por palabra.</p>
+    </div>
+  </div>
+
+  <div class="box tip"><b>Objetivo pedagógico</b>Automatizar estructuras completas (chunks) en vez de traducir palabra por palabra. La presión del combate y del cronómetro de 15 segundos entrena a los estudiantes para hablar rápido y sin bloquearse.</div>
+
+  <h3>¿Qué necesitas?</h3>
+  <ul>
+    <li>Un portátil con <b>Chrome, Edge o Firefox</b> e internet para abrir el juego.</li>
+    <li>Una TV o video beam conectado por HDMI (en <b>duplicar pantalla</b>).</li>
+    <li>Parlantes o el sonido de la TV: todos los efectos se generan en el navegador y no hay que descargar nada.</li>
+    <li>El grupo dividido en <b>2 equipos</b>.</li>
+  </ul>
+
+    <h2 style="margin-top:14pt">2. La pantalla</h2>
+  <img class="shot" src="img/seleccion.jpg" alt="Pantalla con un vagón seleccionado y el timer activo">
+  <div class="cap">Turno de Blue Dragons: se eligió el vagón C, aparece la oración completa ("SAY IT!") y corre el timer de 15 s.</div>
+  <table>
+    <tr><th style="width:28%">Zona</th><th>Qué contiene</th></tr>
+    <tr><td><b>Barra superior</b></td><td>Selector de <b>mazo (DECK)</b>, botón <b>+ Custom Chunks</b>, <b>Fullscreen</b> y el botón de <b>sonido</b> (mute/unmute) en la esquina.</td></tr>
+    <tr><td><b>HUD izquierdo / derecho</b></td><td>Avatar, <b>nombre editable</b> del equipo (haz clic sobre el nombre para cambiarlo) y la <b>barra de vida</b> (100 HP). Azul = Blue Dragons, Rojo/Naranja = Red Titans.</td></tr>
+    <tr><td><b>HUD central</b></td><td><b>ROUND</b> (sube cuando ambos equipos jugaron), indicador <b>TURN</b> del equipo activo y el botón <b>Reset Match</b>.</td></tr>
+    <tr><td><b>Arena</b></td><td>Los dos monstruos. El equipo activo tiene un <b>aura brillante</b> y la etiqueta <b>YOUR TURN!</b>. En el centro están la Locomotora, los 4 vagones, la oración elegida y el timer.</td></tr>
+    <tr><td><b>Barra del profesor</b></td><td>Los 4 botones de control: <span class="tag t-next">Next Chunk</span> <span class="tag t-hit">Normal Hit</span> <span class="tag t-crit">Critical Combo</span> <span class="tag t-shield">Shield</span>.</td></tr>
+  </table>
+</div>
+
+<!-- 3 -->
+<div class="page">
+  <h2>3. Antes de la clase (2 minutos)</h2>
+  <ol class="steps">
+    <li>Abre <b>https://monster-mutation-esl.vercel.app</b> en el portátil y conecta la TV.</li>
+    <li>Pulsa <b>FULLSCREEN</b> (o la tecla <b>F</b>). El juego siempre se adapta a 16:9 y llena la pantalla.</li>
+    <li>Cambia los nombres de los equipos haciendo clic en <i>BLUE DRAGONS</i> y <i>RED TITANS</i>. Los nombres quedan guardados para la próxima clase.</li>
+    <li>Elige el <b>mazo</b> del tema que estás trabajando en el selector <b>DECK</b>, o crea el tuyo con <b>+ Custom Chunks</b> (sección 7).</li>
+    <li>Decide si usarás el <b>timer de 15 s</b> (botón <i>15s TIMER</i> o tecla <b>T</b>).</li>
+    <li>Haz clic una vez en cualquier parte del juego para activar el sonido (los navegadores lo exigen) y revisa que el botón de sonido esté en verde.</li>
+  </ol>
+
+  <h2 style="margin-top:14pt">4. Cómo se juega un turno</h2>
+  <ol class="steps">
+    <li><b>Aparece el chunk:</b> la Locomotora entra a la pantalla con sus 4 vagones. El monstruo del equipo activo brilla.</li>
+    <li><b>El equipo elige un vagón</b> (A, B, C o D). El profesor hace clic sobre él o pulsa la tecla de la letra. Abajo aparece la oración completa con la etiqueta <b>SAY IT!</b>.</li>
+    <li><b>Un estudiante dice la oración completa en voz alta</b>, con buena pronunciación y sin leer palabra por palabra. Si el timer está activo, tiene 15 segundos.</li>
+    <li><b>El profesor juzga</b> y pulsa uno de los botones de ataque (ver tabla). El monstruo se lanza, dispara una bola de energía y el rival recibe el golpe.</li>
+    <li><b>El turno pasa solo al otro equipo</b> y se carga un chunk nuevo automáticamente.</li>
+  </ol>
+
+  <h3>Botones del profesor</h3>
+  <table>
+    <tr><th style="width:30%">Botón</th><th style="width:9%">Tecla</th><th>Efecto</th><th style="width:33%">Cuándo usarlo (sugerencia)</th></tr>
+    <tr><td><span class="tag t-hit">Normal Hit (-20 HP)</span></td><td class="k">1</td><td>El equipo activo ataca: el rival pierde 20 HP. Cambia el turno y carga un chunk nuevo.</td><td>La oración es correcta, aunque con una pequeña duda o algún detalle de pronunciación.</td></tr>
+    <tr><td><span class="tag t-crit">Critical Fluency Combo! (-35 HP)</span></td><td class="k">2</td><td>Ataque especial con bola gigante, temblor de pantalla y banner. El rival pierde 35 HP.</td><td>Respuesta <b>súper fluida</b>: sin pausas, con buena entonación y rápida. Bonus si el estudiante agrega información extra.</td></tr>
+    <tr><td><span class="tag t-shield">Shield / Blocked! (0 HP)</span></td><td class="k">3</td><td>El rival levanta un escudo y el ataque rebota. Nadie pierde vida y cambia el turno.</td><td>Error de gramática, se congeló, usó español, leyó palabra por palabra o se acabó el tiempo.</td></tr>
+    <tr><td><span class="tag t-next">Next Chunk / Randomize</span></td><td class="k">N</td><td>Carga otra Locomotora con otros vagones y <b>cambia el turno</b>, sin ataque.</td><td>Para "pasar" un turno, saltar un chunk que no conviene o calentar antes de empezar.</td></tr>
+  </table>
+  <div class="box"><b>Mientras corre la animación</b>Los botones se ven grises durante el ataque (1,5 s aprox.). Es normal: así se evitan dobles clics por error.</div>
+</div>
+
+<!-- 5 -->
+<div class="page">
+  <div class="grid2">
+    <div>
+      <img class="shot" src="img/critico.jpg" alt="Critical combo">
+      <div class="cap">Critical Fluency Combo: −35 HP.</div>
+    </div>
+    <div>
+      <img class="shot" src="img/escudo.jpg" alt="Shield">
+      <div class="cap">Shield / Blocked: el ataque rebota.</div>
+    </div>
+  </div>
+
+  <h2 style="margin-top:6pt">5. Timer de fluidez (15 segundos)</h2>
+  <ul>
+    <li>Se activa y desactiva con el botón <b>15s TIMER: ON/OFF</b> o con la tecla <b>T</b>.</li>
+    <li>Cuando está encendido, <b>se reinicia solo con cada chunk nuevo</b>. La barra cambia de <span style="color:#16a34a;font-weight:bold">verde</span> a <span style="color:#ca8a04;font-weight:bold">amarillo</span> y luego a <span style="color:#dc2626;font-weight:bold">rojo</span>, con un tic por segundo que se acelera en los últimos 5.</li>
+    <li>Al llegar a 0 suena un buzzer y aparece <b>TIME!</b>. El juego no castiga solo: el profesor decide (normalmente <span class="tag t-shield">Shield</span>).</li>
+    <li><b>RESTART</b> reinicia el conteo si hubo una interrupción en clase.</li>
+    <li>El timer se pausa durante las animaciones y mientras está abierta la ventana de Custom Chunks.</li>
+  </ul>
+
+  <h2 style="margin-top:12pt">6. Fin de la partida: K.O.</h2>
+  <div class="grid2">
+    <div>
+      <p>Cuando un equipo llega a <b>0 HP</b> aparece la pantalla <b>K.O.! / VICTORY!</b> con confeti, fanfarria y el nombre del equipo ganador. El monstruo perdedor cae y el ganador salta de alegría.</p>
+      <p>Pulsa <b>REMATCH</b> (o la tecla <b>R</b>) para una revancha. <b>Reset Match</b> reinicia la partida en cualquier momento: ambos equipos vuelven a 100 HP y a la ronda 1.</p>
+      <div class="box tip"><b>Duración aproximada</b>Para ganar hacen falta 5 golpes normales o 3 combos críticos. Una partida típica dura entre 10 y 15 turnos (unos 10–15 minutos). Para una partida más larga, juega "al mejor de 3".</div>
+    </div>
+    <div>
+      <img class="shot" src="img/victoria.jpg" alt="Victoria">
+      <div class="cap">Pantalla de victoria.</div>
+    </div>
+  </div>
+
+  <h2 style="margin-top:10pt">7. Mazos incluidos</h2>
+  <p>Cada mazo trae <b>12 locomotoras con 4 vagones</b> cada una (48 oraciones posibles). Los chunks salen en orden aleatorio y <b>no se repiten</b> hasta agotar el mazo; los vagones también cambian de posición cada vez.</p>
+  <table>
+    <tr><th style="width:4%">#</th><th style="width:38%">Mazo</th><th>Ejemplos de Locomotora → Vagón</th></tr>
+    <tr><td>1</td><td><b>Simple Past: Be</b> (Was / Were – Celebrities &amp; States)</td><td><code>She WASN'T a...</code> → politician, she was an actor. · <code>Shakira WAS...</code> → born in Barranquilla. · <code>WERE you...</code> → nervous on your first day?</td></tr>
+    <tr><td>2</td><td><b>Simple Past: Regular Verbs</b> &amp; Time Expressions</td><td><code>They DIDN'T...</code> → watch the game last night. · <code>DID you...</code> → study English last night? · <code>Two years ago, we...</code> → moved to a new city.</td></tr>
+    <tr><td>3</td><td><b>Simple Past: Irregular Verbs</b> (Actions &amp; Travel)</td><td><code>We WENT...</code> → to the beach last summer. · <code>He LOST...</code> → his luggage at the airport. · <code>I SAW...</code> → the Eiffel Tower at night.</td></tr>
+    <tr><td>4</td><td><b>The Passive Voice</b> (Present &amp; Past Business/Events)</td><td><code>The report WAS...</code> → written by my brother. · <code>Coffee IS...</code> → grown in the mountains of Colombia. · <code>WAS the contract...</code> → signed by both companies?</td></tr>
+  </table>
+  <p style="font-size:9.5pt;color:#555">En los mazos incluidos, los 4 vagones son correctos. Lo que se evalúa es la producción oral: oración completa, pronunciación y fluidez.</p>
+</div>
+
+<!-- 8 -->
+<div class="page">
+  <h2>8. Crear tus propios chunks (Custom Chunks)</h2>
+  <img class="shot" src="img/custom.jpg" alt="Ventana Custom Chunks">
+  <div class="cap">Ventana + Custom Chunks con el ejemplo cargado.</div>
+  <ol class="steps">
+    <li>Pulsa <b>+ Custom Chunks</b> en la barra superior. Puedes hacerlo antes o durante la clase.</li>
+    <li>Escribe un nombre para el mazo (por ejemplo <i>"Unit 5 – Present Perfect"</i>).</li>
+    <li>Escribe o pega <b>un chunk por línea</b> con este formato (entre 2 y 4 vagones):
+<pre>Locomotora... | vagón 1 | vagón 2 | vagón 3 | vagón 4
+
+She HAS NEVER... | been to Europe. | eaten sushi. | seen snow. | flown in a plane.
+HAVE you EVER... | met a famous person? | lost your phone? | won a prize? | broken a bone?</pre></li>
+    <li>También puedes <b>copiar columnas desde Excel o Google Sheets</b> (columna A = locomotora, columnas B a E = vagones) y pegarlas directamente.</li>
+    <li>El contador verde muestra cuántos chunks son válidos. Si alguna línea tiene un error, aparece su número en rojo y se omite.</li>
+    <li>Pulsa <b>Save &amp; Play</b>. El mazo aparece en el selector con una estrella <b>★</b> y empieza de inmediato.</li>
+  </ol>
+  <div class="box"><b>Consejos</b>Escribe en MAYÚSCULAS la palabra gramatical clave (<code>WAS</code>, <code>DIDN'T</code>, <code>HAVE</code>) para que brille en la locomotora. Termina la locomotora con <code>...</code>: el juego la une con el vagón para formar la oración completa. Si quieres trabajar la detección de errores, puedes incluir un vagón incorrecto a propósito.</div>
+  <div class="box warn"><b>¿Dónde se guarda?</b>El mazo personalizado se guarda en el navegador de ese computador (<code>localStorage</code>). No aparecerá en otro computador, en otro navegador ni en modo incógnito, y se pierde si borras los datos de navegación. Guarda una copia del texto en un documento. Para cambiarlo, vuelve a abrir <b>+ Custom Chunks</b>, edita el texto y guarda. Para eliminarlo, usa <b>Delete Deck</b>. Solo existe un mazo personalizado a la vez.</div>
+
+  <h2 style="margin-top:12pt">9. Atajos de teclado</h2>
+  <table>
+    <tr><th style="width:12%">Tecla</th><th>Acción</th><th style="width:12%">Tecla</th><th>Acción</th></tr>
+    <tr><td class="k">1</td><td>Normal Hit (−20 HP)</td><td class="k">A B C D</td><td>Seleccionar vagón</td></tr>
+    <tr><td class="k">2</td><td>Critical Fluency Combo (−35 HP)</td><td class="k">T</td><td>Timer ON / OFF</td></tr>
+    <tr><td class="k">3</td><td>Shield / Blocked (0 HP)</td><td class="k">M</td><td>Silenciar / activar sonido</td></tr>
+    <tr><td class="k">N</td><td>Next Chunk / Randomize</td><td class="k">F</td><td>Pantalla completa</td></tr>
+    <tr><td class="k">R</td><td>Revancha (en la pantalla de victoria)</td><td></td><td></td></tr>
+  </table>
+  <p style="font-size:9.5pt;color:#555">Los atajos no funcionan mientras escribes en el nombre de un equipo o en la ventana de Custom Chunks. Haz clic fuera del campo para volver a usarlos.</p>
+</div>
+
+<!-- 10 -->
+  <div class="box tip"><b>Resumen en 10 segundos</b>Aparece la locomotora → el equipo elige un vagón → un estudiante dice la oración completa → el profesor pulsa <b>1</b> (bien), <b>2</b> (¡súper fluido!) o <b>3</b> (bloqueado) → turno del otro equipo. El primero en dejar al rival en 0 HP gana.</div>
+<div class="page">
+  <h2>10. Variantes e ideas para la clase</h2>
+  <div class="grid2">
+    <div class="card"><h3>Hablante rotativo</h3><p>Cada turno habla un estudiante distinto del equipo. Nadie puede repetir hasta que todos hayan hablado.</p></div>
+    <div class="card"><h3>Extend it!</h3><p>Para lograr un <b>Critical Combo</b>, el estudiante debe agregar una oración extra de su cosecha (<i>"…and it was amazing because…"</i>).</p></div>
+    <div class="card"><h3>Pregunta y respuesta</h3><p>Con locomotoras de pregunta (<code>DID you...</code>, <code>WAS he...</code>), un estudiante pregunta y otro de su equipo responde con <i>short answer</i> + información. Si ambos lo hacen bien: Critical.</p></div>
+    <div class="card"><h3>Robo de turno</h3><p>Si el equipo activo recibe <b>Shield</b>, el otro equipo puede "robar" diciendo la oración correcta antes de su propio turno (el profesor puede premiarlo con un Normal Hit).</p></div>
+    <div class="card"><h3>Todos eligen, uno habla</h3><p>El equipo discute 10 segundos cuál vagón elegir, pero solo habla el "capitán" del turno. Fomenta la negociación en inglés.</p></div>
+    <div class="card"><h3>Modo práctica</h3><p>Antes de la partida, usa <b>Next Chunk</b> varias veces y que todo el grupo repita en coro (<i>choral drilling</i>) sin atacar.</p></div>
+  </div>
+
+  <h2 style="margin-top:14pt">11. Solución de problemas</h2>
+  <table>
+    <tr><th style="width:34%">Problema</th><th>Solución</th></tr>
+    <tr><td>No se escucha nada</td><td>Haz clic una vez dentro del juego (el navegador bloquea el sonido hasta la primera interacción). Revisa que el botón de sonido esté en verde (tecla <b>M</b>) y el volumen del portátil o la TV.</td></tr>
+    <tr><td>Se ve pequeño o con bordes negros</td><td>Pulsa <b>FULLSCREEN</b> o <b>F</b>. El juego mantiene la proporción 16:9; si la TV tiene otra proporción, aparecen bordes negros (es normal).</td></tr>
+    <tr><td>Los botones están grises</td><td>Hay una animación en curso (espera 1–2 s) o la partida terminó (pulsa <b>REMATCH</b>).</td></tr>
+    <tr><td>Desapareció mi mazo personalizado</td><td>Se guarda solo en ese navegador y computador. Pega de nuevo el texto que guardaste y pulsa Save &amp; Play.</td></tr>
+    <tr><td>Las teclas no responden</td><td>El cursor está dentro del nombre de un equipo. Haz clic en la arena o en un espacio vacío.</td></tr>
+    <tr><td>Un chunk se repite mucho</td><td>No pasa dentro del mismo mazo: solo se repiten después de salir los 12. En un mazo personalizado corto, agrega más líneas.</td></tr>
+  </table>
+
+
+  <p class="foot">Monster Mutation: Chunk Battle · https://monster-mutation-esl.vercel.app · Manual v1.0</p>
+</div>
+
+</body>
+</html>
