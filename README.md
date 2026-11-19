@@ -27,6 +27,6 @@ npm run lint
 
 ## Decks
 
-Four built-in decks live in `src/data/decks.js`. Use **+ Custom Chunks** to paste your own (one per line: `Stem... | slot 1 | slot 2 | slot 3 | slot 4`); it is saved to `localStorage` and appears as ★ in the deck selector.
+Four built-in decks live in `src/data/decks.js`. Use **+ Custom Chunks** to create as many decks as you want (one chunk per line: `Stem... | slot 1 | slot 2 | slot 3 | slot 4`). They are saved to `localStorage` and listed under ★ My Custom Decks in the selector, sorted by level and unit (Basic → Intermediate → Advanced, Unit 9 before Unit 10). In the modal you can edit or delete each deck, **Export All Decks (.json)** to `monster-mutation-decks.json`, and **Import Decks (.json)** on another computer. Import never overwrites: identical decks are skipped and same-name decks with different content are added as "Name (2)".
 
 The UI is a fixed 16:9 stage sized in `rem`; the root font size scales with the viewport so it fits any laptop, projector or TV.

@@ -190,10 +190,10 @@
 <div class="page">
   <h2>8. Crear tus propios chunks (Custom Chunks)</h2>
   <img class="shot" src="img/custom.jpg" alt="Ventana Custom Chunks">
-  <div class="cap">Ventana + Custom Chunks con el ejemplo cargado.</div>
+  <div class="cap">Ventana + Custom Chunks: a la izquierda tus mazos guardados (ordenados por nivel y unidad), a la derecha el editor.</div>
   <ol class="steps">
     <li>Pulsa <b>+ Custom Chunks</b> en la barra superior. Puedes hacerlo antes o durante la clase.</li>
-    <li>Escribe un nombre para el mazo (por ejemplo <i>"Unit 5 – Present Perfect"</i>).</li>
+    <li>Pulsa <b>+ New Deck</b> y escribe un nombre con nivel y unidad (por ejemplo <i>"Basic 1 - Unit 7A"</i>, <i>"Intermediate - Unit 9C"</i>).</li>
     <li>Escribe o pega <b>un chunk por línea</b> con este formato (entre 2 y 4 vagones):
 <pre>Locomotora... | vagón 1 | vagón 2 | vagón 3 | vagón 4
 
@@ -201,10 +201,11 @@ She HAS NEVER... | been to Europe. | eaten sushi. | seen snow. | flown in a plan
 HAVE you EVER... | met a famous person? | lost your phone? | won a prize? | broken a bone?</pre></li>
     <li>También puedes <b>copiar columnas desde Excel o Google Sheets</b> (columna A = locomotora, columnas B a E = vagones) y pegarlas directamente.</li>
     <li>El contador verde muestra cuántos chunks son válidos. Si alguna línea tiene un error, aparece su número en rojo y se omite.</li>
-    <li>Pulsa <b>Save &amp; Play</b>. El mazo aparece en el selector con una estrella <b>★</b> y empieza de inmediato.</li>
+    <li>Pulsa <b>Save &amp; Play</b>. El mazo aparece en el selector, en el grupo <b>★ My Custom Decks</b>, y empieza de inmediato.</li>
+    <li>Para <b>editar</b> un mazo, haz clic en su nombre en la lista y pulsa <b>Save Changes &amp; Play</b>. Para <b>borrarlo</b>, pulsa el icono de papelera y confirma con <b>Delete</b>.</li>
   </ol>
   <div class="box"><b>Consejos</b>Escribe en MAYÚSCULAS la palabra gramatical clave (<code>WAS</code>, <code>DIDN'T</code>, <code>HAVE</code>) para que brille en la locomotora. Termina la locomotora con <code>...</code>: el juego la une con el vagón para formar la oración completa. Si quieres trabajar la detección de errores, puedes incluir un vagón incorrecto a propósito.</div>
-  <div class="box warn"><b>¿Dónde se guarda?</b>El mazo personalizado se guarda en el navegador de ese computador (<code>localStorage</code>). No aparecerá en otro computador, en otro navegador ni en modo incógnito, y se pierde si borras los datos de navegación. Guarda una copia del texto en un documento. Para cambiarlo, vuelve a abrir <b>+ Custom Chunks</b>, edita el texto y guarda. Para eliminarlo, usa <b>Delete Deck</b>. Solo existe un mazo personalizado a la vez.</div>
+  <div class="box warn"><b>¿Dónde se guarda? Copia de seguridad</b>Tus mazos se guardan en el navegador de ese computador (<code>localStorage</code>): no aparecen en otro computador, en otro navegador ni en modo incógnito, y se pierden si borras los datos de navegación. Para llevarlos a otro computador, pulsa <b>Export All Decks (.json)</b>: se descarga el archivo <code>monster-mutation-decks.json</code> con todos tus mazos. En el computador del salón, abre <b>+ Custom Chunks</b> y pulsa <b>Import Decks (.json)</b>. La importación nunca sobrescribe: los mazos idénticos se omiten y, si ya tienes uno con el mismo nombre pero distinto contenido, el importado se agrega como <i>"Nombre (2)"</i>.</div>
 
   <h2 style="margin-top:12pt">9. Atajos de teclado</h2>
   <table>

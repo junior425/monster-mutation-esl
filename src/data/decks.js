@@ -75,27 +75,110 @@ export const DECKS = [
   },
 ];
 
-export const CUSTOM_DECK_ID = "custom";
-const CUSTOM_KEY = "mm-custom-deck";
+const STORE_KEY = "mm-custom-decks";
+const LEGACY_KEY = "mm-custom-deck";
+export const BACKUP_FILE = "monster-mutation-decks.json";
+export const DEFAULT_DECK_NAME = "My Custom Chunks";
 
-export function loadCustomDeck() {
+export const isCustomDeck = (id) => typeof id === "string" && id.startsWith("custom");
+export const newDeckId = () => `custom-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+
+function cleanChunks(chunks) {
+  if (!Array.isArray(chunks)) return [];
+  return chunks
+    .map((ch) => ({
+      stem: typeof ch?.stem === "string" ? ch.stem.trim() : "",
+      slots: Array.isArray(ch?.slots) ? ch.slots.filter((x) => typeof x === "string" && x.trim()).map((x) => x.trim()).slice(0, 4) : [],
+    }))
+    .filter((ch) => ch.stem && ch.slots.length >= 2);
+}
+
+function cleanDeck(deck) {
+  const chunks = cleanChunks(deck?.chunks);
+  if (chunks.length === 0) return null;
+  const name = typeof deck.name === "string" && deck.name.trim() ? deck.name.trim().slice(0, 60) : DEFAULT_DECK_NAME;
+  return { id: isCustomDeck(deck.id) ? deck.id : newDeckId(), name, chunks };
+}
+
+const LEVELS = ["starter", "beginner", "basic", "elementary", "pre-intermediate", "intermediate", "upper-intermediate", "advanced", "proficiency"];
+const levelRank = (name) => {
+  const n = name.toLowerCase().replace(/^(pre|upper)[\s_]+/, "$1-");
+  const i = LEVELS.findIndex((l) => n.startsWith(l) && !/[a-z]/.test(n[l.length] ?? ""));
+  return i === -1 ? LEVELS.length : i;
+};
+const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: "base" });
+
+// Level order first (Basic before Intermediate before Advanced), then natural name order (Unit 9 before Unit 10).
+export function sortDecks(decks) {
+  return [...decks].sort((a, b) => levelRank(a.name) - levelRank(b.name) || collator.compare(a.name, b.name));
+}
+
+export function saveCustomDecks(decks) {
   try {
-    const raw = localStorage.getItem(CUSTOM_KEY);
-    if (!raw) return null;
-    const deck = JSON.parse(raw);
-    if (!deck || !Array.isArray(deck.chunks) || deck.chunks.length === 0) return null;
-    return { id: CUSTOM_DECK_ID, name: deck.name || "My Custom Chunks", chunks: deck.chunks };
+    localStorage.setItem(STORE_KEY, JSON.stringify(decks.map(({ id, name, chunks }) => ({ id, name, chunks }))));
+    return true;
   } catch {
-    return null;
+    return false;
   }
 }
 
-export function saveCustomDeck(name, chunks) {
-  localStorage.setItem(CUSTOM_KEY, JSON.stringify({ name, chunks }));
+export function loadCustomDecks() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw !== null) return sortDecks(JSON.parse(raw).map(cleanDeck).filter(Boolean));
+    const legacy = cleanDeck({ ...JSON.parse(localStorage.getItem(LEGACY_KEY) ?? "null"), id: "custom" });
+    const decks = legacy ? [legacy] : [];
+    if (saveCustomDecks(decks)) localStorage.removeItem(LEGACY_KEY);
+    return decks;
+  } catch {
+    return [];
+  }
 }
 
-export function deleteCustomDeck() {
-  localStorage.removeItem(CUSTOM_KEY);
+export function exportBackup(decks) {
+  return JSON.stringify(
+    { app: "monster-mutation-chunk-battle", version: 1, exportedAt: new Date().toISOString(), decks: decks.map(({ name, chunks }) => ({ name, chunks })) },
+    null,
+    2,
+  );
+}
+
+const sameChunks = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+
+// Accepts an exported backup, a bare array of decks or a single deck. Never overwrites: identical decks are skipped,
+// decks whose name is taken by different content are added as "Name (2)".
+export function mergeBackup(existing, text) {
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    throw new Error("This file is not valid JSON.");
+  }
+  const list = Array.isArray(data) ? data : Array.isArray(data?.decks) ? data.decks : data?.chunks ? [data] : null;
+  if (!list) throw new Error("No decks found in this file.");
+  const incoming = list.map((d) => cleanDeck({ ...d, id: undefined })).filter(Boolean);
+  if (incoming.length === 0) throw new Error("No valid decks found in this file.");
+
+  const decks = [...existing];
+  const result = { added: 0, renamed: 0, skipped: 0 };
+  const key = (n) => n.toLowerCase();
+  for (const deck of incoming) {
+    const named = (n) => decks.find((d) => key(d.name) === key(n));
+    const same = named(deck.name);
+    if (same && sameChunks(same.chunks, deck.chunks)) {
+      result.skipped++;
+      continue;
+    }
+    if (same) {
+      let i = 2;
+      while (named(`${deck.name} (${i})`)) i++;
+      deck.name = `${deck.name} (${i})`;
+      result.renamed++;
+    }
+    decks.push(deck);
+    result.added++;
+  }
+  return { decks: sortDecks(decks), ...result };
 }
 
 // One chunk per line: "Stem... | slot 1 | slot 2 | slot 3 | slot 4" (tabs also work, e.g. pasted from a spreadsheet).

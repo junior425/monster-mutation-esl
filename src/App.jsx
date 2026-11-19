@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { CUSTOM_DECK_ID, DECKS, deleteCustomDeck, loadCustomDeck, saveCustomDeck } from "./data/decks.js";
+import { DECKS, isCustomDeck, loadCustomDecks, saveCustomDecks, sortDecks } from "./data/decks.js";
 import { setMuted as setAudioMuted, sfx } from "./lib/audio.js";
 import TeamPanel from "./components/TeamPanel.jsx";
 import Fighter from "./components/Fighter.jsx";
@@ -60,16 +60,13 @@ function drawChunk(deck, current) {
   return { ...chunk, slots: shuffle(chunk.slots), idx, deckId: deck.id, key: `${deck.id}-${idx}-${Date.now()}` };
 }
 
-function getDecks(custom) {
-  return custom ? [...DECKS, custom] : DECKS;
-}
 
 export default function App() {
-  const [customDeck, setCustomDeck] = useState(loadCustomDeck);
-  const decks = getDecks(customDeck);
+  const [customDecks, setCustomDecks] = useState(loadCustomDecks);
+  const decks = [...DECKS, ...customDecks];
   const [deckId, setDeckId] = useState(() => {
     const saved = stored("mm-deck", DECKS[0].id);
-    return getDecks(customDeck).some((d) => d.id === saved) ? saved : DECKS[0].id;
+    return [...DECKS, ...customDecks].some((d) => d.id === saved) ? saved : DECKS[0].id;
   });
   const deck = decks.find((d) => d.id === deckId) ?? DECKS[0];
 
@@ -177,25 +174,29 @@ export default function App() {
     newChunk(d);
   };
 
-  const saveCustom = (name, chunks) => {
-    saveCustomDeck(name, chunks);
-    const d = { id: CUSTOM_DECK_ID, name, chunks };
-    bags.delete(CUSTOM_DECK_ID);
-    setCustomDeck(d);
-    setDeckId(CUSTOM_DECK_ID);
-    newChunk(d);
+  const updateCustomDecks = (next) => {
+    const sorted = sortDecks(next);
+    saveCustomDecks(sorted);
+    setCustomDecks(sorted);
+    return sorted;
+  };
+
+  const saveCustom = (deck) => {
+    const exists = customDecks.some((d) => d.id === deck.id);
+    updateCustomDecks(exists ? customDecks.map((d) => (d.id === deck.id ? deck : d)) : [...customDecks, deck]);
+    bags.delete(deck.id);
+    setDeckId(deck.id);
+    newChunk(deck);
     setModalOpen(false);
   };
 
-  const removeCustom = () => {
-    deleteCustomDeck();
-    bags.delete(CUSTOM_DECK_ID);
-    setCustomDeck(null);
-    if (deckId === CUSTOM_DECK_ID) {
+  const removeCustom = (id) => {
+    updateCustomDecks(customDecks.filter((d) => d.id !== id));
+    bags.delete(id);
+    if (deckId === id) {
       setDeckId(DECKS[0].id);
       newChunk(DECKS[0]);
     }
-    setModalOpen(false);
   };
 
   const toggleFullscreen = () => {
@@ -273,11 +274,20 @@ export default function App() {
             disabled={locked}
             className="w-[40rem] rounded-xl border-2 border-indigo-300/60 bg-indigo-950 px-4 py-2 text-[1.45rem] font-bold text-white outline-none focus:border-cyan-300"
           >
-            {decks.map((d, i) => (
+            {DECKS.map((d, i) => (
               <option key={d.id} value={d.id}>
-                {d.id === CUSTOM_DECK_ID ? `★ ${d.name}` : `${i + 1}. ${d.name}`}
+                {`${i + 1}. ${d.name}`}
               </option>
             ))}
+            {customDecks.length > 0 && (
+              <optgroup label="★ My Custom Decks">
+                {customDecks.map((d) => (
+                  <option key={d.id} value={d.id}>
+                    {`★ ${d.name}`}
+                  </option>
+                ))}
+              </optgroup>
+            )}
           </select>
           <button
             type="button"
@@ -374,7 +384,15 @@ export default function App() {
       <AnimatePresence>
         {winner !== null && <VictoryOverlay key="victory" winner={winner} name={names[winner] || `Team ${winner + 1}`} onRematch={resetMatch} />}
         {modalOpen && (
-          <CustomChunksModal key="modal" initial={customDeck} onSave={saveCustom} onDelete={removeCustom} onClose={() => setModalOpen(false)} />
+          <CustomChunksModal
+            key="modal"
+            decks={customDecks}
+            currentId={isCustomDeck(deckId) ? deckId : null}
+            onSave={saveCustom}
+            onDelete={removeCustom}
+            onReplaceAll={updateCustomDecks}
+            onClose={() => setModalOpen(false)}
+          />
         )}
       </AnimatePresence>
     </div>
