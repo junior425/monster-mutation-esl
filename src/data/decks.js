@@ -73,6 +73,25 @@ export const DECKS = [
       c("ARE the orders...", "delivered on weekends?", "packed by hand?", "tracked online?", "paid in advance?"),
     ],
   },
+  {
+    id: "advanced-12c",
+    name: "Advanced 1 - Unit 12C: Modals of Deduction",
+    chunks: [
+      c("He MUST BE...", "really tired – he didn't sleep at all last night.", "at home – his car is outside.", "rich – he drives a Ferrari.", "hungry – he didn't have lunch today."),
+      c("She CAN'T BE...", "at work – the office is closed today.", "his sister – they look completely different.", "hungry – she just ate a huge pizza.", "a teacher – she's only fifteen years old."),
+      c("It MUST BE...", "cold outside – everyone's wearing gloves.", "raining – everyone has an umbrella.", "very late – the streets are empty.", "Mark's birthday – there's a cake in the office."),
+      c("She MAY BE...", "sick – she isn't at work today.", "on vacation – I haven't seen her for a few days.", "at the gym – she usually goes after work.", "stuck in traffic – it's rush hour."),
+      c("He MIGHT BE...", "in a meeting – he isn't answering his phone.", "at a friend's house.", "the new manager, but I'm not sure.", "on his way – he left an hour ago."),
+      c("They COULD BE...", "British – they have a strong accent.", "brothers – they look very similar.", "lost – they keep looking at the map.", "at the café on the corner."),
+      c("He MIGHT NOT LIKE...", "the new café – he only drinks tea.", "spicy food, so let's order something else.", "the surprise party – he hates parties.", "horror movies. Let's ask him first."),
+      c("We CAN'T BE...", "at the right address – there's no restaurant here.", "late – the class starts at nine and it's eight thirty.", "lost – the GPS says we're here.", "the only ones here – I can hear voices."),
+      c("It MIGHT BE...", "cheaper at the other store, but I'm not sure.", "the museum Lucy was talking about.", "closed on Sundays – let's check online.", "sunny this afternoon, so take your sunglasses."),
+      c("They MUST BE HAVING...", "a party upstairs – it's very noisy.", "a great time at the beach.", "dinner – all the lights are on in the kitchen.", "problems with the internet again."),
+      c("They CAN'T BE PLAYING...", "soccer now – it's nearly midnight!", "outside – it's raining really hard.", "video games – there's no electricity.", "the piano – they don't have one."),
+      c("She MUST BE TALKING...", "to David – she left him a message.", "to her boss – she looks very serious.", "on the phone – I can hear her voice.", "about the exam – she looks worried."),
+      c("He MUST BE DOING...", "his homework in his bedroom.", "exercise – he's wearing sports clothes.", "something important – he isn't answering.", "the shopping – his car isn't here."),
+    ],
+  },
 ];
 
 const STORE_KEY = "mm-custom-decks";
